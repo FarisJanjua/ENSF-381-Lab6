@@ -49,31 +49,32 @@ Description : API Usage.
         async function fetchStudents() {
             const response = await fetch('https://65dfb2a4ff5e305f32a3049f.mockapi.io/students');
             const students = await response.json();
-            var ul = document.createElement('ul');
+            const studentList = document.getElementById('studentList');
             students.forEach(student => {
-                var li = document.createElement('li');
+                const li = document.createElement('li');
                 li.textContent = student.name;
-                ul.appendChild(li);
+                
+                // click event
+                li.onclick = () => fetchCourses(student.id);
+                studentList.appendChild(li);
             });
-            document.getElementById('studentListSection').appendChild(ul);
+            document.getElementById('studentList').appendChild(ul);
         }
 
         // Function to fetch and display courses for a student
         async function fetchCourses(studentId) {
-            const response = await fetch(`https://65dfb2a4ff5e305f32a3049f.mockapi.io/students/${studentid}/courses`);
-            const courses = await responce.json();
-            
+            const response1 = await fetch(`https://65dfb2a4ff5e305f32a3049f.mockapi.io/students/${studentId}/courses`);
+            const courses = await response1.json();
             const courseList = document.getElementById('courseList');
-            courseList.innerHTML = ''; //wiping the data
-
+            courseList.innerHTML = ''; // wiping the data
+    
             courses.forEach(course => {
                 var li = document.createElement('li');
                 li.textContent = `${course.name} ${course.unit}`;
                 courseList.appendChild(li);
-            });    
+            });
         }
-    
-
+        
         // Fetch students on window load
         window.onload = fetchStudents;
     </script>
